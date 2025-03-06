@@ -1,0 +1,303 @@
+
+## 1. 首页/主导航页面
+
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>重庆数字会展</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.5;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background-color: #1976d2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .search-bar {
+            background: white;
+            margin: 15px;
+            padding: 10px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .search-bar input {
+            border: none;
+            flex: 1;
+            padding: 5px 10px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            color: #999;
+        }
+        
+        .banner {
+            margin: 0 15px 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 150px;
+        }
+        
+        .banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .main-nav {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 0 15px;
+        }
+        
+        .nav-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 10px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 10px;
+            background-color: #e3f2fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+        
+        .nav-icon i {
+            font-size: 20px;
+            color: #1976d2;
+        }
+        
+        .nav-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            margin: 25px 15px 15px;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .view-all {
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .exhibition-list {
+            padding: 0 15px;
+        }
+        
+        .exhibition-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .exhibition-img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        
+        .exhibition-info {
+            padding: 12px;
+        }
+        
+        .exhibition-title {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .exhibition-details {
+            display: flex;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .exhibition-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-right: 8px;
+        }
+        
+        .exhibition-date {
+            margin-left: auto;
+        }
+        
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            padding: 8px 0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .tab-item.active {
+            color: #1976d2;
+        }
+        
+        .tab-icon {
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <h1>重庆数字会展</h1>
+    </header>
+    
+    <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="搜索展会...">
+    </div>
+    
+    <div class="banner">
+        <img src="https://via.placeholder.com/400x150" alt="会展宣传">
+    </div>
+    
+    <div class="main-nav">
+        <a href="organize.html" class="nav-item">
+            <div class="nav-icon">
+                <i class="fas fa-calendar-plus"></i>
+            </div>
+            <div class="nav-title">我要办展</div>
+        </a>
+        <a href="participate.html" class="nav-item">
+            <div class="nav-icon">
+                <i class="fas fa-store"></i>
+            </div>
+            <div class="nav-title">我要参展</div>
+        </a>
+        <a href="hot-exhibitions.html" class="nav-item">
+            <div class="nav-icon">
+                <i class="fas fa-fire"></i>
+            </div>
+            <div class="nav-title">最近热展</div>
+        </a>
+    </div>
+    
+    <div class="section-title">
+        <span>推荐展会</span>
+        <a href="#" class="view-all">查看全部 ></a>
+    </div>
+    
+    <div class="exhibition-list">
+        <div class="exhibition-card">
+            <img src="https://via.placeholder.com/400x200" alt="展会图片" class="exhibition-img">
+            <div class="exhibition-info">
+                <div class="exhibition-title">2023重庆智能制造博览会</div>
+                <div class="exhibition-details">
+                    <span class="exhibition-tag">制造业</span>
+                    <span class="exhibition-organizer">重庆智博会组委会</span>
+                    <span class="exhibition-date">2023.09.15-18</span>
+                </div>
+                <div class="exhibition-desc">聚焦智能制造最新技术和产品，展示行业领先解决方案</div>
+            </div>
+        </div>
+        
+        <div class="exhibition-card">
+            <img src="https://via.placeholder.com/400x200" alt="展会图片" class="exhibition-img">
+            <div class="exhibition-info">
+                <div class="exhibition-title">2023中国国际农业博览会</div>
+                <div class="exhibition-details">
+                    <span class="exhibition-tag">农业</span>
+                    <span class="exhibition-organizer">中国农博会</span>
+                    <span class="exhibition-date">2023.10.20-25</span>
+                </div>
+                <div class="exhibition-desc">展示现代农业发展成就，促进农业科技交流与合作</div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="height: 60px;"></div> <!-- Spacing for tab bar -->
+    
+    <div class="tab-bar">
+        <a href="index.html" class="tab-item active">
+            <i class="fas fa-home tab-icon"></i>
+            <span>首页</span>
+        </a>
+        <a href="exhibitions.html" class="tab-item">
+            <i class="fas fa-calendar-alt tab-icon"></i>
+            <span>展会</span>
+        </a>
+        <a href="tasks.html" class="tab-item">
+            <i class="fas fa-tasks tab-icon"></i>
+            <span>待办</span>
+        </a>
+        <a href="mine.html" class="tab-item">
+            <i class="fas fa-user tab-icon"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html>
+```
