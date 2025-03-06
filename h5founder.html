@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我要办展 - 重庆数字会展</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.5;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            background-color: #1976d2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+        
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        .header h1 {
+            flex: 1;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .panel {
+            margin: 15px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .panel-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .panel-title i {
+            margin-right: 8px;
+            color: #1976d2;
+        }
+        
+        .step-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .step-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #1976d2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .step-desc {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 15px;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        
+        .info-card {
+            background: #e3f2fd;
+            border-radius: 5px;
+            padding: 12px;
+            font-size: 13px;
+            color: #0d47a1;
+            margin-bottom: 15px;
+        }
+        
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+        
+        .todo-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        
+        .status-pending {
+            background: #ff9800;
+        }
+        
+        .status-approved {
+            background: #4caf50;
+        }
+        
+        .status-rejected {
+            background: #f44336;
+        }
+        
+        .todo-content {
+            flex: 1;
+        }
+        
+        .todo-title {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+        
+        .todo-date {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .todo-action {
+            color: #1976d2;
+            font-size: 12px;
+            padding: 4px 8px;
+            border: 1px solid #1976d2;
+            border-radius: 12px;
+            text-decoration: none;
+        }
+        
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            padding: 8px 0;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        .tab-item.active {
+            color: #1976d2;
+        }
+        
+        .tab-icon {
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+        <h1>我要办展</h1>
+    </header>
+    
+    <div class="panel">
+        <div class="panel-title">
+            <i class="fas fa-clipboard-list"></i> 办展申请
+        </div>
+        <div class="info-card">
+            <i class="fas fa-info-circle"></i> 办展须知：请先阅读相关政策和要求，确保您的展会符合要求。
+        </div>
+        <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <div class="step-title">办展须知</div>
+                <div class="step-desc">了解办展流程、所需材料和相关政策要求</div>
+            </div>
+        </div>
+        <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <div class="step-title">资料提交</div>
+                <div class="step-desc">填写申请表格并上传必要的证明材料</div>
+            </div>
+        </div>
+        <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <div class="step-title">等待审核</div>
+                <div class="step-desc">商务委及相关部门将对您的申请进行审核</div>
+            </div>
+        </div>
+        <a href="exhibition-apply.html" class="btn">开始申请</a>
+    </div>
+    
+    <div class="panel">
+        <div class="panel-title">
+            <i class="fas fa-tasks"></i> 待办事项
+        </div>
+        <div class="todo-item">
+            <div class="todo-status status-pending"></div>
+            <div class="todo-content">
+                <div class="todo-title">2023智能制造博览会申请</div>
+                <div class="todo-date">提交时间：2023-05-10</div>
+            </div>
+            <a href="#" class="todo-action">查看</a>
+        </div>
+        <div class="todo-item">
+            <div class="todo-status status-rejected"></div>
+            <div class="todo-content">
+                <div class="todo-title">2023文化创意展申请</div>
+                <div class="todo-date">提交时间：2023-04-20</div>
+            </div>
+            <a href="#" class="todo-action">修改</a>
+        </div>
+        <div class="todo-item">
+            <div class="todo-status status-approved"></div>
+            <div class="todo-content">
+                <div class="todo-title">2023春季新品发布会申请</div>
+                <div class="todo-date">提交时间：2023-02-15</div>
+            </div>
+            <a href="#" class="todo-action">查看</a>
+        </div>
+    </div>
+    
+    <div style="height: 60px;"></div> <!-- Spacing for tab bar -->
+    
+    <div class="tab-bar">
+        <a href="index.html" class="tab-item">
+            <i class="fas fa-home tab-icon"></i>
+            <span>首页</span>
+        </a>
+        <a href="exhibitions.html" class="tab-item">
+            <i class="fas fa-calendar-alt tab-icon"></i>
+            <span>展会</span>
+        </a>
+        <a href="tasks.html" class="tab-item">
+            <i class="fas fa-tasks tab-icon"></i>
+            <span>待办</span>
+        </a>
+        <a href="mine.html" class="tab-item">
+            <i class="fas fa-user tab-icon"></i>
+            <span>我的</span>
+        </a>
+    </div>
+</body>
+</html>
+```
