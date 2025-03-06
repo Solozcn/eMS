@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字会展业务系统 - 资源查找</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background-color: #1976d2;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-title {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #0d47a1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .user-role {
+            margin-right: 15px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+        
+        .sidebar {
+            width: 240px;
+            background-color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+            padding: 20px 0;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 5px;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 12px 25px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: #e8f0fe;
+            color: #1976d2;
+            border-left-color: #1976d2;
+        }
+        
+        .sub-menu {
+            list-style: none;
+            padding-left: 20px;
+            display: none;
+        }
+        
+        .nav-item.expanded .sub-menu {
+            display: block;
+        }
+        
+        .sub-menu .nav-link {
+            padding: 8px 25px;
+            font-size: 0.9em;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .page-title {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 1.8em;
+            color: #333;
+        }
+        
+        .content-section {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+        }
+        
+        .search-btn {
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background-color: #1565c0;
+        }
+        
+        .resource-filters {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .resource-card {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .resource-title {
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .resource-details {
+            margin-top: 10px;
+            color: #555;
+            font-size: 0.9em;
+        }
+        
+        .resource-actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .view-btn {
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .view-btn:hover {
+            background-color: #bbdefb;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .pagination-btn {
+            padding: 8px 12px;
+            margin: 0 5px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .pagination-btn.active {
+            background-color: #e8f0fe;
+            color: #1976d2;
+            border-color: #1976d2;
+        }
+        
+        .footer {
+            background-color: white;
+            text-align: center;
+            padding: 15px;
+            color: #666;
+            border-top: 1px solid #eee;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-title">数字会展业务系统</div>
+        <div class="user-info">
+            <div class="user-avatar">主</div>
+            <div class="user-role">主办方</div>
+            <button class="logout-btn" onclick="window.location.href='index.html'">退出登录</button>
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <nav class="sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item expanded">
+                    <a href="#" class="nav-link active">一、策划立项</a>
+                    <ul class="sub-menu">
+                        <li><a href="#" class="nav-link active">资源查找</a></li>
+                        <li><a href="#" class="nav-link">确认办展需求</a></li>
+                        <li><a href="#" class="nav-link">专业场馆会展活动备案立项</a></li>
+                        <li><a href="#" class="nav-link">商圈、市政广场会展活动备案立项</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">二、筹备与资源整合</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">三、宣传推广</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">四、现场执行</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">五、展后评估与服务</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">六、招商线索管理</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">系统管理</a>
+                </li>
+            </ul>
+        </nav>
+        
+        <main class="content">
+            <h1 class="page-title">资源查找</h1>
+            
+            <section class="content-section">
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="输入关键词搜索资源...">
+                    <button class="search-btn">搜索</button>
+                </div>
+                
+                <div class="resource-filters">
+                    <select class="filter-select">
+                        <option value="">资源类型（全部）</option>
+                        <option value="venue">场馆</option>
+                        <option value="company">企业</option>
+                        <option value="news">行业资讯</option>
+                        <option value="policy">会展政策</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option value="">行业分类（全部）</option>
+                        <option value="technology">科技</option>
+                        <option value="manufacture">制造业</option>
+                        <option value="agriculture">农业</option>
+                        <option value="service">服务业</option>
+                        <option value="culture">文化创意</option>
+                    </select>
+                    
+                    <select class="filter-select">
+                        <option value="">区域（全部）</option>
+                        <option value="district1">区域1</option>
+                        <option value="district2">区域2</option>
+                        <option value="district3">区域3</option>
+                        <option value="district4">区域4</option>
+                    </select>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">场馆资源</h2>
+                
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-title">国际会展中心</div>
+                        <div>类型：专业展馆</div>
+                        <div>面积：50,000 m²</div>
+                        <div>地址：市中心区域</div>
+                        <div class="resource-details">
+                            提供大型会展场地，拥有完善的设施和服务，适合各类专业展会。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-title">科技展览馆</div>
+                        <div>类型：专业展馆</div>
+                        <div>面积：30,000 m²</div>
+                        <div>地址：科技园区</div>
+                        <div class="resource-details">
+                            专注于科技类展览，提供智能化设施和多媒体展示支持。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-title">城市广场</div>
+                        <div>类型：市政广场</div>
+                        <div>面积：10,000 m²</div>
+                        <div>地址：市中心商业区</div>
+                        <div class="resource-details">
+                            开放式公共空间，适合举办大众类展览和文化活动。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">产业上下游企业</h2>
+                
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-title">智能制造科技有限公司</div>
+                        <div>行业：制造业</div>
+                        <div>规模：大型</div>
+                        <div>地址：工业园区</div>
+                        <div class="resource-details">
+                            专注于智能制造设备研发与生产，是行业领先企业。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-title">绿色农业发展有限公司</div>
+                        <div>行业：农业</div>
+                        <div>规模：中型</div>
+                        <div>地址：郊区</div>
+                        <div class="resource-details">
+                            专注于有机农产品生产和销售，推动可持续农业发展。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-title">创新科技服务有限公司</div>
+                        <div>行业：服务业</div>
+                        <div>规模：中型</div>
+                        <div>地址：科技园区</div>
+                        <div class="resource-details">
+                            提供技术咨询、项目对接和创新孵化服务。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="content-section">
+                <h2 class="section-title">行业资讯与政策</h2>
+                
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <div class="resource-title">2023年会展行业发展趋势分析</div>
+                        <div>类型：行业报告</div>
+                        <div>发布时间：2023-06-15</div>
+                        <div>来源：行业协会</div>
+                        <div class="resource-details">
+                            详细分析了会展行业的最新发展趋势和未来前景。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-title">关于促进会展业高质量发展的政策</div>
+                        <div>类型：政策文件</div>
+                        <div>发布时间：2023-03-10</div>
+                        <div>来源：市商务委</div>
+                        <div class="resource-details">
+                            针对会展业发展的扶持政策和规范要求。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-title">会展项目品牌建设指南</div>
+                        <div>类型：指导文件</div>
+                        <div>发布时间：2023-05-20</div>
+                        <div>来源：行业协会</div>
+                        <div class="resource-details">
+                            提供会展项目品牌建设的方法和标准。
+                        </div>
+                        <div class="resource-actions">
+                            <button class="view-btn">查看详情</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="pagination">
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">下一页 &raquo;</button>
+            </div>
+        </main>
+    </div>
+    
+    <footer class="footer">
+        版权所有 © 2023 数字会展业务系统
+    </footer>
+    
+    <script>
+        // 简单的导航菜单交互
+        document.querySelectorAll('.nav-menu > .nav-item > .nav-link').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const parent = this.parentElement;
+                
+                // 关闭其他展开的菜单
+                document.querySelectorAll('.nav-item.expanded').forEach(expandedItem => {
+                    if (expandedItem !== parent) {
+                        expandedItem.classList.remove('expanded');
+                    }
+                });
+                
+                // 切换当前菜单的展开状态
+                parent.classList.toggle('expanded');
+                
+                // 移除其他active状态
+                document.querySelectorAll('.nav-link.active').forEach(activeLink => {
+                    if (activeLink !== this) {
+                        activeLink.classList.remove('active');
+                    }
+                });
+                
+                // 设置当前链接为active
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
