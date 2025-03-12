@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成员安全保障 - 拍摄安全保障一件事</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .section {
+            margin: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        
+        .section-header {
+            background: #1565C0;
+            color: white;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .section-icon {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-content {
+            padding: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .button {
+            display: inline-block;
+            background: #1565C0;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .button-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .file-upload input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .upload-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            border: 1px dashed #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .upload-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        
+        .qr-code {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .qr-code img {
+            max-width: 200px;
+            border: 1px solid #eee;
+            padding: 10px;
+            background: white;
+        }
+        
+        .qr-code-desc {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .list-icon {
+            width: 40px;
+            height: 40px;
+            background: #E3F2FD;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #1565C0;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        
+        .list-content {
+            flex-grow: 1;
+        }
+        
+        .list-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .list-desc {
+            font-size: 13px;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .list-arrow {
+            color: #999;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            border-top: 1px solid #eee;
+            height: 55px;
+        }
+        
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+            padding: 5px 0;
+            text-decoration: none;
+        }
+        
+        .footer-item.active {
+            color: #1565C0;
+        }
+        
+        .footer-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        
+        .tab-container {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: #1565C0;
+            font-weight: bold;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: #1565C0;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .card-status {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+        
+        .card-status.active {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+        
+        .card-status.expired {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+        
+        .card-info {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .card-info-item {
+            width: 50%;
+            margin-bottom: 8px;
+        }
+        
+        .card-info-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .card-info-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 30px 0;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+        
+        .empty-text {
+            font-size: 14px;
+        }
+        
+        .info-box {
+            background: #E3F2FD;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #0D47A1;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .info-icon {
+            margin-right: 10px;
+            font-size: 18px;
+            margin-top: 2px;
+        }
+        
+        /* 适配小屏幕 */
+        @media (max-width: 360px) {
+            .header {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 16px;
+            }
+            
+            .section {
+                margin: 10px;
+            }
+            
+            .section-header {
+                padding: 10px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-button">←</a>
+            <h1>成员安全保障</h1>
+        </div>
+        
+        <div class="tab-container">
+            <div class="tab active">劳务合同</div>
+            <div class="tab">一码通</div>
+            <div class="tab">异常通报</div>
+        </div>
+        
+        <!-- 劳务合同上传 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">📄</div>
+                劳务合同上传
+            </div>
+            <div class="section-content">
+                <div class="info-box">
+                    <div class="info-icon">ℹ️</div>
+                    <div>上传您的劳务合同，享受全方位安全保障服务。合同信息将严格保密，仅用于安全保障服务。</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">合同名称</label>
+                    <input type="text" class="form-input" placeholder="请输入合同名称">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">合同类型</label>
+                    <select class="form-select">
+                        <option value="">请选择合同类型</option>
+                        <option value="1">演员劳务合同</option>
+                        <option value="2">导演/编剧合同</option>
+                        <option value="3">摄影/灯光合同</option>
+                        <option value="4">道具/美术合同</option>
+                        <option value="5">后期制作合同</option>
+                        <option value="6">其他类型合同</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">签约剧组</label>
+                    <input type="text" class="form-input" placeholder="请输入签约剧组名称">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">合同有效期</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="date" class="form-input" style="flex: 1;">
+                        <span style="line-height: 38px;">至</span>
+                        <input type="date" class="form-input" style="flex: 1;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">合同文件上传</label>
+                    <div class="file-upload">
+                        <div class="upload-button">
+                            <div class="upload-icon">📎</div>
+                            <div>点击上传合同文件（PDF格式）</div>
+                        </div>
+                        <input type="file" accept=".pdf">
+                    </div>
+                </div>
+                <button class="button">提交上传</button>
+            </div>
+        </div>
+        
+        <!-- 劳务合同一览 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">📋</div>
+                劳务合同一览
+            </div>
+            <div class="section-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">《流浪地球3》特效制作合同</div>
+                        <div class="card-status active">有效</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-item">
+                            <div class="card-info-label">合同类型</div>
+                            <div class="card-info-value">后期制作合同</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">签约日期</div>
+                            <div class="card-info-value">2023-10-15</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">有效期至</div>
+                            <div class="card-info-value">2024-06-30</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">保险状态</div>
+                            <div class="card-info-value">已投保</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">《三体》摄影合同</div>
+                        <div class="card-status active">有效</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-item">
+                            <div class="card-info-label">合同类型</div>
+                            <div class="card-info-value">摄影/灯光合同</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">签约日期</div>
+                            <div class="card-info-value">2023-08-20</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">有效期至</div>
+                            <div class="card-info-value">2024-03-15</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">保险状态</div>
+                            <div class="card-info-value">已投保</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">《长安三万里》美术设计合同</div>
+                        <div class="card-status expired">已过期</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-info-item">
+                            <div class="card-info-label">合同类型</div>
+                            <div class="card-info-value">道具/美术合同</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">签约日期</div>
+                            <div class="card-info-value">2022-11-05</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">有效期至</div>
+                            <div class="card-info-value">2023-09-30</div>
+                        </div>
+                        <div class="card-info-item">
+                            <div class="card-info-label">保险状态</div>
+                            <div class="card-info-value">已过期</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 拍摄服务一码通 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">🔑</div>
+                拍摄服务一码通
+            </div>
+            <div class="section-content">
+                <div class="qr-code">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://example.com/member/12345" alt="成员一码通">
+                    <div class="qr-code-desc">
+                        <p>扫描上方二维码，快速查看您的安全保障信息</p>
+                        <p style="margin-top: 5px; color: #1565C0;">有效期至：2024-12-31</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <button class="button">保存二维码到手机</button>
+                    <button class="button button-secondary" style="margin-top: 10px;">刷新二维码</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航 -->
+    <div class="footer">
+        <a href="index.html" class="footer-item">
+            <div class="footer-icon">🏠</div>
+            <div>首页</div>
+        </a>
+        <a href="crew_safety.html" class="footer-item">
+            <div class="footer-icon">📽️</div>
+            <div>剧组保障</div>
+        </a>
+        <a href="member_safety.html" class="footer-item active">
+            <div class="footer-icon">👥</div>
+            <div>成员保障</div>
+        </a>
+        <a href="dashboard.html" class="footer-item">
+            <div class="footer-icon">📊</div>
+            <div>驾驶舱</div>
+        </a>
+    </div>
+</body>
+</html> 
