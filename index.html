@@ -3,153 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数字会展业务系统 - 登录</title>
+    <title>拍摄安全保障一件事</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
         }
         
-        .login-container {
-            display: flex;
-            width: 900px;
-            height: 500px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1565C0, #0D47A1);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .section {
+            margin: 15px;
+            background: white;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         
-        .login-banner {
-            flex: 1;
-            background: linear-gradient(135deg, #1e88e5, #0d47a1);
+        .section-header {
+            background: #1565C0;
             color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 40px;
-        }
-        
-        .login-banner h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        
-        .login-banner p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .login-form {
-            flex: 1;
-            background-color: white;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .login-form h2 {
-            margin-bottom: 30px;
-            color: #333;
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        
-        .form-group input:focus {
-            outline: none;
-            border-color: #1e88e5;
-        }
-        
-        .role-select {
-            margin-bottom: 25px;
-        }
-        
-        .role-select label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-        }
-        
-        .role-select select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            background-color: white;
-        }
-        
-        .login-btn {
-            background-color: #1e88e5;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 4px;
+            padding: 12px 15px;
             font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
         }
         
-        .login-btn:hover {
-            background-color: #1976d2;
+        .section-icon {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .subsection {
+            border-bottom: 1px solid #eee;
+            padding: 0;
+        }
+        
+        .subsection:last-child {
+            border-bottom: none;
+        }
+        
+        .subsection-header {
+            padding: 12px 15px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .subsection-header::after {
+            content: "›";
+            font-size: 20px;
+            color: #999;
+        }
+        
+        .item-list {
+            padding: 0;
+        }
+        
+        .item {
+            padding: 12px 15px 12px 35px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #666;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .item::before {
+            content: "•";
+            position: absolute;
+            left: 20px;
+            color: #1565C0;
+        }
+        
+        .item::after {
+            content: "›";
+            font-size: 18px;
+            color: #ccc;
+        }
+        
+        .item:last-child {
+            border-bottom: none;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            border-top: 1px solid #eee;
+            height: 50px;
+        }
+        
+        .footer-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 12px;
+            padding: 5px 0;
+        }
+        
+        .footer-item.active {
+            color: #1565C0;
+        }
+        
+        .footer-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+        
+        /* 适配小屏幕 */
+        @media (max-width: 360px) {
+            .section {
+                margin: 10px;
+            }
+            
+            .section-header {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .subsection-header {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .item {
+                padding: 10px 10px 10px 30px;
+                font-size: 13px;
+            }
+            
+            .item::before {
+                left: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-banner">
-            <h1>数字会展业务系统</h1>
-            <p>一站式会展管理平台，连接主办方、参展方、观展方与政府部门，高效管理会展全流程。</p>
+    <div class="container">
+        <div class="header">
+            <h1>拍摄安全保障一件事</h1>
         </div>
-        <div class="login-form">
-            <h2>用户登录</h2>
-            <div class="form-group">
-                <label for="username">用户名</label>
-                <input type="text" id="username" placeholder="请输入用户名">
+        
+        <!-- 剧组安全保障 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">📽️</div>
+                剧组安全保障
             </div>
-            <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" id="password" placeholder="请输入密码">
+            
+            <div class="subsection">
+                <div class="subsection-header">剧组填报</div>
+                <div class="item-list">
+                    <div class="item">用人劳务合同上传</div>
+                    <div class="item">用人保险保单上传</div>
+                    <div class="item">已同步劳务信息一览表</div>
+                </div>
             </div>
-            <div class="role-select">
-                <label for="role">登录角色</label>
-                <select id="role">
-                    <option value="exhibitor">主办方</option>
-                    <option value="participant">参展方</option>
-                    <option value="visitor">观展方</option>
-                    <option value="commerce-committee">商务委</option>
-                    <option value="other-department">其他部门</option>
-                </select>
+            
+            <div class="subsection">
+                <div class="subsection-header">剧组一码通</div>
+                <div class="item-list">
+                    <div class="item">查看剧组二维码</div>
+                </div>
             </div>
-            <button class="login-btn" onclick="alert('登录成功！')">登录</button>
+            
+            <div class="subsection">
+                <div class="subsection-header">异常通报</div>
+                <div class="item-list">
+                    <div class="item">现场伤人记录</div>
+                    <div class="item">现场财务损坏记录</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 成员安全保障 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">👥</div>
+                成员安全保障
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">劳务合同上传</div>
+                <div class="item-list">
+                    <div class="item">上传劳务合同</div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">劳务合同一览</div>
+                <div class="item-list">
+                    <div class="item">查看近期用户自有劳务合同</div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">拍摄服务一码通</div>
+                <div class="item-list">
+                    <div class="item">查看二维码</div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">异常通报</div>
+                <div class="item-list">
+                    <div class="item">受伤记录</div>
+                    <div class="item">被损财务记录</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 驾驶舱 -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon">📊</div>
+                驾驶舱
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">区域剧组一览</div>
+                <div class="item-list">
+                    <div class="item">剧组名称</div>
+                    <div class="item">剧组拍摄时段</div>
+                    <div class="item">拍摄场景位置</div>
+                    <div class="item">剧组用人规模</div>
+                    <div class="item">剧组人员需求缺口</div>
+                    <div class="item">劳务合同数量</div>
+                    <div class="item">保险数量</div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">区域用人一览</div>
+                <div class="item-list">
+                    <div class="item">区域网络视听从业人员登记规模</div>
+                    <div class="item">劳务合同签署规模</div>
+                    <div class="item">保险签署规模</div>
+                </div>
+            </div>
+            
+            <div class="subsection">
+                <div class="subsection-header">安全保障追踪</div>
+                <div class="item-list">
+                    <div class="item">年内异常事件数量</div>
+                    <div class="item">异常事件处置情况</div>
+                    <div class="item" style="padding-left: 50px;">未处置数量</div>
+                    <div class="item" style="padding-left: 65px;">未处置事件明细清单</div>
+                    <div class="item" style="padding-left: 50px;">完成处置数量</div>
+                    <div class="item" style="padding-left: 65px;">已处置事件明细清单</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 底部导航 -->
+    <div class="footer">
+        <div class="footer-item active">
+            <div class="footer-icon">📽️</div>
+            <div>剧组保障</div>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">👥</div>
+            <div>成员保障</div>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">📊</div>
+            <div>驾驶舱</div>
+        </div>
+        <div class="footer-item">
+            <div class="footer-icon">👤</div>
+            <div>我的</div>
         </div>
     </div>
 </body>
