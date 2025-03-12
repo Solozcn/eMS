@@ -27,101 +27,97 @@
         .header {
             background: linear-gradient(135deg, #1565C0, #0D47A1);
             color: white;
-            padding: 15px 20px;
+            padding: 20px;
             text-align: center;
             position: relative;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             margin: 0;
         }
         
-        .section {
-            margin: 15px;
+        .header p {
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+        
+        .main-menu {
+            margin: 20px 15px;
+        }
+        
+        .menu-item {
             background: white;
             border-radius: 10px;
+            margin-bottom: 15px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: relative;
         }
         
-        .section-header {
-            background: #1565C0;
-            color: white;
-            padding: 12px 15px;
-            font-size: 16px;
-            font-weight: bold;
+        .menu-item a {
             display: flex;
             align-items: center;
+            padding: 20px;
+            text-decoration: none;
+            color: #333;
         }
         
-        .section-icon {
-            margin-right: 10px;
-            width: 24px;
-            height: 24px;
+        .menu-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #1565C0;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
         
-        .subsection {
-            border-bottom: 1px solid #eee;
-            padding: 0;
+        .menu-content {
+            flex-grow: 1;
         }
         
-        .subsection:last-child {
-            border-bottom: none;
-        }
-        
-        .subsection-header {
-            padding: 12px 15px;
-            font-size: 15px;
+        .menu-title {
+            font-size: 18px;
             font-weight: bold;
-            color: #333;
-            background-color: #f9f9f9;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .subsection-header::after {
-            content: "›";
-            font-size: 20px;
-            color: #999;
-        }
-        
-        .item-list {
-            padding: 0;
-        }
-        
-        .item {
-            padding: 12px 15px 12px 35px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 14px;
-            color: #666;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .item::before {
-            content: "•";
-            position: absolute;
-            left: 20px;
+            margin-bottom: 5px;
             color: #1565C0;
         }
         
-        .item::after {
-            content: "›";
-            font-size: 18px;
-            color: #ccc;
+        .menu-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
         }
         
-        .item:last-child {
-            border-bottom: none;
+        .menu-arrow {
+            font-size: 24px;
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .notice-bar {
+            background: #FFF8E1;
+            border-left: 4px solid #FFC107;
+            padding: 12px 15px;
+            margin: 20px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #795548;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notice-icon {
+            margin-right: 10px;
+            font-size: 18px;
         }
         
         .footer {
@@ -132,7 +128,7 @@
             background: white;
             display: flex;
             border-top: 1px solid #eee;
-            height: 50px;
+            height: 55px;
         }
         
         .footer-item {
@@ -144,6 +140,7 @@
             color: #666;
             font-size: 12px;
             padding: 5px 0;
+            text-decoration: none;
         }
         
         .footer-item.active {
@@ -155,29 +152,64 @@
             margin-bottom: 2px;
         }
         
+        .stats {
+            display: flex;
+            margin: 0 15px 20px;
+            justify-content: space-between;
+        }
+        
+        .stat-item {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin: 0 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .stat-item:first-child {
+            margin-left: 0;
+        }
+        
+        .stat-item:last-child {
+            margin-right: 0;
+        }
+        
+        .stat-number {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1565C0;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+        
         /* 适配小屏幕 */
         @media (max-width: 360px) {
-            .section {
-                margin: 10px;
+            .header {
+                padding: 15px;
             }
             
-            .section-header {
-                padding: 10px;
-                font-size: 15px;
+            .header h1 {
+                font-size: 20px;
             }
             
-            .subsection-header {
-                padding: 10px;
-                font-size: 14px;
+            .menu-title {
+                font-size: 16px;
             }
             
-            .item {
-                padding: 10px 10px 10px 30px;
+            .menu-desc {
                 font-size: 13px;
             }
             
-            .item::before {
-                left: 15px;
+            .menu-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
             }
         }
     </style>
@@ -186,138 +218,83 @@
     <div class="container">
         <div class="header">
             <h1>拍摄安全保障一件事</h1>
+            <p>保障影视拍摄安全，维护行业健康发展</p>
         </div>
         
-        <!-- 剧组安全保障 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">📽️</div>
-                剧组安全保障
+        <div class="notice-bar">
+            <div class="notice-icon">📢</div>
+            <div>最新通知：关于加强影视拍摄安全管理的通知已发布，请及时查看</div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">28</div>
+                <div class="stat-label">在拍剧组</div>
             </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">剧组填报</div>
-                <div class="item-list">
-                    <div class="item">用人劳务合同上传</div>
-                    <div class="item">用人保险保单上传</div>
-                    <div class="item">已同步劳务信息一览表</div>
-                </div>
+            <div class="stat-item">
+                <div class="stat-number">1205</div>
+                <div class="stat-label">从业人员</div>
             </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">剧组一码通</div>
-                <div class="item-list">
-                    <div class="item">查看剧组二维码</div>
-                </div>
-            </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">异常通报</div>
-                <div class="item-list">
-                    <div class="item">现场伤人记录</div>
-                    <div class="item">现场财务损坏记录</div>
-                </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">合同覆盖率</div>
             </div>
         </div>
         
-        <!-- 成员安全保障 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">👥</div>
-                成员安全保障
+        <div class="main-menu">
+            <div class="menu-item">
+                <a href="crew_safety.html">
+                    <div class="menu-icon">📽️</div>
+                    <div class="menu-content">
+                        <div class="menu-title">剧组安全保障</div>
+                        <div class="menu-desc">剧组填报、一码通、异常通报等功能，保障剧组安全生产</div>
+                    </div>
+                    <div class="menu-arrow">›</div>
+                </a>
             </div>
             
-            <div class="subsection">
-                <div class="subsection-header">劳务合同上传</div>
-                <div class="item-list">
-                    <div class="item">上传劳务合同</div>
-                </div>
+            <div class="menu-item">
+                <a href="member_safety.html">
+                    <div class="menu-icon">👥</div>
+                    <div class="menu-content">
+                        <div class="menu-title">成员安全保障</div>
+                        <div class="menu-desc">劳务合同管理、保险保障、异常情况记录与处理</div>
+                    </div>
+                    <div class="menu-arrow">›</div>
+                </a>
             </div>
             
-            <div class="subsection">
-                <div class="subsection-header">劳务合同一览</div>
-                <div class="item-list">
-                    <div class="item">查看近期用户自有劳务合同</div>
-                </div>
-            </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">拍摄服务一码通</div>
-                <div class="item-list">
-                    <div class="item">查看二维码</div>
-                </div>
-            </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">异常通报</div>
-                <div class="item-list">
-                    <div class="item">受伤记录</div>
-                    <div class="item">被损财务记录</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 驾驶舱 -->
-        <div class="section">
-            <div class="section-header">
-                <div class="section-icon">📊</div>
-                驾驶舱
-            </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">区域剧组一览</div>
-                <div class="item-list">
-                    <div class="item">剧组名称</div>
-                    <div class="item">剧组拍摄时段</div>
-                    <div class="item">拍摄场景位置</div>
-                    <div class="item">剧组用人规模</div>
-                    <div class="item">剧组人员需求缺口</div>
-                    <div class="item">劳务合同数量</div>
-                    <div class="item">保险数量</div>
-                </div>
-            </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">区域用人一览</div>
-                <div class="item-list">
-                    <div class="item">区域网络视听从业人员登记规模</div>
-                    <div class="item">劳务合同签署规模</div>
-                    <div class="item">保险签署规模</div>
-                </div>
-            </div>
-            
-            <div class="subsection">
-                <div class="subsection-header">安全保障追踪</div>
-                <div class="item-list">
-                    <div class="item">年内异常事件数量</div>
-                    <div class="item">异常事件处置情况</div>
-                    <div class="item" style="padding-left: 50px;">未处置数量</div>
-                    <div class="item" style="padding-left: 65px;">未处置事件明细清单</div>
-                    <div class="item" style="padding-left: 50px;">完成处置数量</div>
-                    <div class="item" style="padding-left: 65px;">已处置事件明细清单</div>
-                </div>
+            <div class="menu-item">
+                <a href="dashboard.html">
+                    <div class="menu-icon">📊</div>
+                    <div class="menu-content">
+                        <div class="menu-title">驾驶舱</div>
+                        <div class="menu-desc">区域剧组一览、用人规模统计、安全保障追踪与分析</div>
+                    </div>
+                    <div class="menu-arrow">›</div>
+                </a>
             </div>
         </div>
     </div>
     
     <!-- 底部导航 -->
     <div class="footer">
-        <div class="footer-item active">
+        <a href="index.html" class="footer-item active">
+            <div class="footer-icon">🏠</div>
+            <div>首页</div>
+        </a>
+        <a href="crew_safety.html" class="footer-item">
             <div class="footer-icon">📽️</div>
             <div>剧组保障</div>
-        </div>
-        <div class="footer-item">
+        </a>
+        <a href="member_safety.html" class="footer-item">
             <div class="footer-icon">👥</div>
             <div>成员保障</div>
-        </div>
-        <div class="footer-item">
+        </a>
+        <a href="dashboard.html" class="footer-item">
             <div class="footer-icon">📊</div>
             <div>驾驶舱</div>
-        </div>
-        <div class="footer-item">
-            <div class="footer-icon">👤</div>
-            <div>我的</div>
-        </div>
+        </a>
     </div>
 </body>
 </html>
