@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字会展驾驶舱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+        
+        body {
+            background-color: #061537;
+            color: #fff;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .dashboard {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+        }
+        
+        .header {
+            height: 8%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 42px;
+            font-weight: bold;
+            text-align: center;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 5px;
+            position: relative;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+        }
+        
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+        }
+        
+        .date-time {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 16px;
+            color: #7eb6ff;
+        }
+        
+        /* 顶部产业数据区域 */
+        .top-stats {
+            height: 12%;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background: rgba(16, 42, 90, 0.8);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(0, 242, 254, 0.2);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #7eb6ff;
+        }
+        
+        /* 主要内容区域 */
+        .main-content {
+            height: 80%;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .side-column {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+        
+        .center-column {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .panel {
+            background: rgba(16, 42, 90, 0.8);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .panel-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #4facfe;
+            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .panel-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background: linear-gradient(to bottom, #4facfe, #00f2fe);
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+        
+        .sub-panel {
+            margin-bottom: 10px;
+        }
+        
+        .sub-title {
+            font-size: 14px;
+            color: #7eb6ff;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sub-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #00f2fe;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        
+        .data-list {
+            list-style: none;
+        }
+        
+        .data-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #d1e5ff;
+        }
+        
+        .data-item::before {
+            content: '•';
+            color: #00f2fe;
+            margin-right: 8px;
+        }
+        
+        .data-card {
+            background: rgba(0, 242, 254, 0.05);
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .data-card:hover {
+            transform: scale(1.03);
+            background: rgba(0, 242, 254, 0.1);
+        }
+        
+        .data-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 2px;
+            text-shadow: 0 0 8px rgba(79, 172, 254, 0.3);
+        }
+        
+        .data-label {
+            font-size: 12px;
+            color: #7eb6ff;
+        }
+        
+        .map-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .map-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4facfe;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .map-placeholder {
+            flex: 1;
+            background: rgba(0, 242, 254, 0.05);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #7eb6ff;
+            font-size: 16px;
+            border: 1px dashed rgba(79, 172, 254, 0.5);
+            position: relative;
+        }
+        
+        .map-placeholder::after {
+            content: '重庆市地图';
+            position: absolute;
+            font-size: 24px;
+            color: rgba(79, 172, 254, 0.3);
+        }
+        
+        .flex-row {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .flex-1 {
+            flex: 1;
+        }
+        
+        .top3-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            padding: 4px;
+            background: rgba(0, 242, 254, 0.05);
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .top3-item:hover {
+            background: rgba(0, 242, 254, 0.1);
+        }
+        
+        .top3-rank {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+        
+        .top3-name {
+            flex: 1;
+            font-size: 12px;
+            color: #d1e5ff;
+        }
+        
+        .top3-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #4facfe;
+            text-shadow: 0 0 5px rgba(79, 172, 254, 0.3);
+        }
+        
+        /* 自适应高度 */
+        .h-small {
+            flex: 1;
+        }
+        
+        .h-medium {
+            flex: 1.5;
+        }
+        
+        .h-large {
+            flex: 2;
+        }
+        
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(16, 42, 90, 0.3);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(79, 172, 254, 0.5);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(79, 172, 254, 0.7);
+        }
+        
+        /* 数据突出显示 */
+        .highlight-data {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .highlight-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4facfe;
+            margin-right: 5px;
+            text-shadow: 0 0 5px rgba(79, 172, 254, 0.3);
+        }
+        
+        .highlight-label {
+            font-size: 12px;
+            color: #7eb6ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <div class="date-time" id="datetime">2025年03月13日 15:30:45</div>
+            <h1 class="title">数字会展驾驶舱</h1>
+        </div>
+        
+        <!-- 顶部产业数据区域 -->
+        <div class="top-stats">
+            <div class="stat-card">
+                <div class="stat-value">128.5</div>
+                <div class="stat-label">产业发展指数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">18.7%</div>
+                <div class="stat-label">企业增长率</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">22.3%</div>
+                <div class="stat-label">帮扶资金增长</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">1250万</div>
+                <div class="stat-label">年度人流规模</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3.2亿</div>
+                <div class="stat-label">资金兑现规模</div>
+            </div>
+        </div>
+        
+        <!-- 主要内容区域 -->
+        <div class="main-content">
+            <!-- 左侧栏 -->
+            <div class="side-column">
+                <!-- 会展资源匹配及申报 -->
+                <div class="panel h-medium">
+                    <h2 class="panel-title">会展资源匹配及申报</h2>
+                    
+                    <div class="sub-panel">
+                        <h3 class="sub-title">资源数据归集</h3>
+                        <div class="flex-row">
+                            <div class="data-card flex-1">
+                                <div class="data-value">32</div>
+                                <div class="data-label">场馆规模</div>
+                            </div>
+                            <div class="data-card flex-1">
+                                <div class="data-value">1,256</div>
+                                <div class="data-label">产业链企业</div>
+                            </div>
+                        </div>
+                        <div class="data-card">
+                            <div class="data-value">187</div>
+                            <div class="data-label">今年项目数</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-panel">
+                        <h3 class="sub-title">企业供需智能匹配</h3>
+                        <div class="highlight-data">
+                            <div class="highlight-value">4</div>
+                            <div class="highlight-label">本地主要相关行业</div>
+                        </div>
+                        <div class="highlight-data">
+                            <div class="highlight-value">35万m²</div>
+                            <div class="highlight-label">会展产业资源</div>
+                        </div>
+                        <div class="highlight-data">
+                            <div class="highlight-value">458家</div>
+                            <div class="highlight-label">配套服务企业</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-panel">
+                        <h3 class="sub-title">选址云勘服务</h3>
+                        <div class="highlight-data">
+                            <div class="highlight-value">3个</div>
+                            <div class="highlight-label">VR场景展示</div>
+                        </div>
+                        <div class="highlight-data">
+                            <div class="highlight-value">256次</div>
+                            <div class="highlight-label">云勘服务使用</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel h-medium">
+                    <h2 class="panel-title">会展立项申报及备案</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">142</div>
+                            <div class="data-label">总立项数</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">28</div>
+                            <div class="data-label">在评审数</div>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">92%</div>
+                        <div class="data-label">按时完结比例</div>
+                    </div>
+                    
+                    <h3 class="sub-title" style="margin-top: 8px">会展协同审批</h3>
+                    <div class="highlight-data">
+                        <div class="highlight-value">7个</div>
+                        <div class="highlight-label">部门协同审批</div>
+                    </div>
+                    <div class="highlight-data">
+                        <div class="highlight-value">-35%</div>
+                        <div class="highlight-label">审批时长缩短</div>
+                    </div>
+                </div>
+                
+                <div class="panel h-medium">
+                    <h2 class="panel-title">会展项目信息发布</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">42</div>
+                            <div class="data-label">近期展会总数</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">8</div>
+                            <div class="data-label">本月新增</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="sub-title" style="margin-top: 8px">资源智能推荐</h3>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">12</div>
+                            <div class="data-label">制造业展会</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">9</div>
+                            <div class="data-label">文旅展会</div>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">7</div>
+                            <div class="data-label">农业展会</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">14</div>
+                            <div class="data-label">科技展会</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 中间栏 - 地图 -->
+            <div class="center-column">
+                <div class="panel" style="height: 100%">
+                    <div class="map-container">
+                        <div class="map-title">重庆市会展产业分布图</div>
+                        <div class="map-placeholder"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧栏 -->
+            <div class="side-column">
+                <div class="panel h-medium">
+                    <h2 class="panel-title">办展执行协同处置</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">100%</div>
+                            <div class="data-label">安全保障覆盖</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">98.7%</div>
+                            <div class="data-label">纠纷处置率</div>
+                        </div>
+                    </div>
+                    <div class="highlight-data">
+                        <div class="highlight-value">12分钟</div>
+                        <div class="highlight-label">应急响应时间</div>
+                    </div>
+                    
+                    <h3 class="sub-title" style="margin-top: 8px">会展+招商</h3>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">328</div>
+                            <div class="data-label">推送企业数</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">76.2%</div>
+                            <div class="data-label">企业反馈率</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel h-small">
+                    <h2 class="panel-title">会展+消费</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">32.6%</div>
+                            <div class="data-label">区域人流提升</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">28.9%</div>
+                            <div class="data-label">文旅人流提升</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel h-medium">
+                    <h2 class="panel-title">会展绩效智能评价</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">3,256</div>
+                            <div class="data-label">媒体传播量</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">1,872</div>
+                            <div class="data-label">参展企业数</div>
+                        </div>
+                    </div>
+                    <div class="data-card">
+                        <div class="data-value">97.8%</div>
+                        <div class="data-label">协同处置成功率</div>
+                    </div>
+                    
+                    <h3 class="sub-title" style="margin-top: 8px">项目评价TOP3</h3>
+                    <div class="top3-item">
+                        <div class="top3-rank">1</div>
+                        <div class="top3-name">重庆智博会</div>
+                        <div class="top3-value">98.5分</div>
+                    </div>
+                    <div class="top3-item">
+                        <div class="top3-rank">2</div>
+                        <div class="top3-name">西部农业博览会</div>
+                        <div class="top3-value">96.2分</div>
+                    </div>
+                    <div class="top3-item">
+                        <div class="top3-rank">3</div>
+                        <div class="top3-name">重庆文旅博览会</div>
+                        <div class="top3-value">95.7分</div>
+                    </div>
+                </div>
+                
+                <div class="panel h-medium">
+                    <h2 class="panel-title">品牌展会项目评定</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">86</div>
+                            <div class="data-label">申报数量</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">32</div>
+                            <div class="data-label">在审数量</div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="sub-title" style="margin-top: 8px">评定结果TOP3</h3>
+                    <div class="top3-item">
+                        <div class="top3-rank">1</div>
+                        <div class="top3-name">重庆智博会</div>
+                        <div class="top3-value">5星级</div>
+                    </div>
+                    <div class="top3-item">
+                        <div class="top3-rank">2</div>
+                        <div class="top3-name">西部农业博览会</div>
+                        <div class="top3-value">5星级</div>
+                    </div>
+                    <div class="top3-item">
+                        <div class="top3-rank">3</div>
+                        <div class="top3-name">重庆文旅博览会</div>
+                        <div class="top3-value">4星级</div>
+                    </div>
+                </div>
+                
+                <div class="panel h-small">
+                    <h2 class="panel-title">扶持政策展示</h2>
+                    <div class="flex-row">
+                        <div class="data-card flex-1">
+                            <div class="data-value">256</div>
+                            <div class="data-label">帮扶企业数</div>
+                        </div>
+                        <div class="data-card flex-1">
+                            <div class="data-value">78</div>
+                            <div class="data-label">在帮企业</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 更新日期时间
+        function updateDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('datetime').textContent = 
+                `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
+        }
+        
+        // 初始化更新时间
+        updateDateTime();
+        // 每秒更新一次时间
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>
